@@ -38,6 +38,7 @@ class MultiSorter():
 
 		return goal
 		
+	#A linear sorting algorithm
 	def bubble_sort(self,pop,direction = 'ASC'):
 		if direction == 'DESC':
 			#Descending Order 
@@ -56,9 +57,8 @@ class MultiSorter():
 					i += 1
 				if swapped == False:
 					done = True
-		
 		else:
-			#Ascending Order
+			#Ascending order
 			done = False
 			while done == False:
 				i=0
@@ -72,6 +72,73 @@ class MultiSorter():
 						pop[j] = tmp
 						swapped = True
 					i += 1
+				if swapped == False:
+					done = True
+	
+
+	#Cocktail sort is a bi-directional bubble sorting algorithm
+	def cocktail_sort(self,pop,direction = 'ASC'):
+		if direction == 'DESC':
+			#Descending Order 
+			done = False
+			while done == False:
+				i=0
+				while i < len(pop)-1:
+					swapped = False
+					j = i+1
+					if pop[i] < pop[j]:
+						#swap the elements
+						tmp = pop[i]
+						pop[i] = pop[j]
+						pop[j] = tmp
+						swapped = True
+					i += 1
+				if swapped == False:
+					done = True
+				
+				#Now go from the back to the front
+				while i > 0:
+					swapped = False
+					j = i-1
+					if pop[i] < pop[j]:
+						#swap the elements
+						tmp = pop[i]
+						pop[i] = pop[j]
+						pop[j] = tmp
+						swapped = True
+					i -= 1
+				if swapped == False:
+					done = True
+		
+		else:
+			#Ascending Order
+			done = False
+			while done == False:
+				i=0
+				swapped = False
+				while i < len(pop)-1:
+					j = i+1
+					if pop[i] > pop[j]:
+						#swap the elements
+						tmp = pop[i]
+						pop[i] = pop[j]
+						pop[j] = tmp
+						swapped = True
+					i += 1
+				if swapped == False:
+					done = True
+				
+				#Now go from the back to the front
+				while i > 0:
+					swapped = False #Going the other direction we assume the order may be complete again
+					j = i-1
+					if pop[i] > pop[j]:
+						#swap the elements
+						tmp = pop[i]
+						pop[i] = pop[j]
+						pop[j] = tmp
+						swapped = True
+					i -= 1
 				if swapped == False:
 					done = True
 		return pop
