@@ -1,6 +1,12 @@
+#
 #This class is a set of different sorting algorithms in Python. It currently has:
+#
 #Merge Sort
 #Bubble Sort
+#Cocktail Sort
+#
+#Written by: D. Reilly 2012
+#
 
 class MultiSorter():
 	#recursively sort individual sub-sets of the packet

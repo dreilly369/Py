@@ -5,6 +5,7 @@ import imp
 from multisorter import MultiSorter
 
 #for testing the multi sorter class
+#Written by: D. Reilly 2013
 def run():
 	#Make sure to recompile the MultiSorter Module during testing
 	mod = imp.find_module('multisorter')
