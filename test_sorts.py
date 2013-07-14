@@ -1,11 +1,22 @@
 import sys
 import time
 import random
+import imp
 from multisorter import MultiSorter
 
 #for testing the multi sorter class
 def run():
-	print("Recursive Merge sort")
+	#Make sure to recompile the MultiSorter Module during testing
+	mod = imp.find_module('multisorter')
+	res = imp.load_module('multisorter.MultiSorter',mod[0],mod[1],mod[2])
+	
+	
+	algorithms = ['Merge Sort = 1','Bubble Sort = 2','Cocktail Sort = 3']
+	for x in algorithms:
+		print x
+	choice = int(raw_input("Choose Algorithm: "))
+	
+	
 	str_len = -1
 	sample_size = -1
 	run_wild = False
@@ -19,30 +30,23 @@ def run():
 			raw_input('>')
 	
 	pop = generate_samples(str_len,sample_size)#generate a population of strings
+	
 	print("Done Generating Samples")
-	
-	ms_pop = run_merge_sort(pop)
-	print("Done Sorting Samples")
-	
-	show = raw_input("Show sorted population? 0/1:")
-	if int(show)>0:
-		print(ms_pop)
 		
-	#Now compare it to bubble sorting the same population
-	print("Running Bubble sort on same unsorted set")
-	bbl_pop = run_bubble_sort(pop)
-	print("Done Sorting Samples")
+	if choice == 1:
+		ms_pop = run_merge_sort(pop)
+	if choice == 2:
+		ms_pop = run_bubble_sort(pop)
+	if choice == 3:
+		ms_pop = run_cocktail_sort(pop)
 	
-	show = raw_input("Show sorted population? 0/1:")
-	if int(show)>0:
-		print(bbl_pop)
+
 	exit(0)
 	
+
 #This function generates sz random strings of length ln.
 #it doesn't account for Capitolization at this time.
 #used for testing the sorting functions in the MultiSorter class
-
-
 def generate_samples(ln,sz):
 	alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 	i = 0
@@ -80,15 +84,42 @@ def sort_timer(func):
 
 @sort_timer
 def run_merge_sort(pop):
+	print("Recursive Merge sort")
 	sorter = MultiSorter()
 	ms_pop = sorter.ms_sort(pop)
-	return pop
+	print("Done Sorting Samples")
+	show = raw_input("Show sorted population? 0/1:")
+	if int(show)>0:
+		print("------")
+		print(ms_pop)
+		print("------")
+	return ms_pop
 
 @sort_timer
 def run_bubble_sort(pop):
+	print("Bubble sort")
 	sorter = MultiSorter()
 	bbl_pop = sorter.bubble_sort(pop,'ASC')
-	return pop
+	print("Done Sorting Samples")
+	show = raw_input("Show sorted population? 0/1:")
+	if int(show)>0:
+		print("------")
+		print(bbl_pop)
+		print("------")
+	return bbl_pop
+
+@sort_timer
+def run_cocktail_sort(pop):
+	print("Bi-Directional Bubble sort")
+	sorter = MultiSorter()
+	ctl_pop = sorter.cocktail_sort(pop,'ASC')
+	print("Done Sorting Samples")
+	show = raw_input("Show sorted population? 0/1:")
+	if int(show)>0:
+		print("------")
+		print(ctl_pop)
+		print("------")
+	return ctl_pop
 
 
 if __name__=="__main__":

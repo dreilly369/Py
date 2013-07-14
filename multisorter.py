@@ -6,12 +6,16 @@ class MultiSorter():
 	#recursively sort individual sub-sets of the packet
 	def ms_sort(self,packet):
 		if len(packet) > 1:
-			n_sz = int(len(packet)/2)
 			#split the pack at about the middle
+			n_sz = int(len(packet)/2)
 			a_pack = packet[:n_sz]
 			b_pack = packet[n_sz:]
+			
+			#Recursively sort each sub pack
 			org_pack_a = self.ms_sort(a_pack)#Yay, Recursion 
 			org_pack_b = self.ms_sort(b_pack)#Yay, Recursion
+			
+			#merge the recursive results back together
 			n_pack = self.ms_merge(org_pack_a,org_pack_b)
 			return n_pack
 			
@@ -45,9 +49,10 @@ class MultiSorter():
 			done = False
 			while done == False:
 				i=0
+				swapped = False
 				while i < len(pop)-1:
-					swapped = False
 					j = i+1
+					print(pop[i],pop[j])
 					if pop[i] < pop[j]:
 						#swap the elements
 						tmp = pop[i]
@@ -59,59 +64,6 @@ class MultiSorter():
 					done = True
 		else:
 			#Ascending order
-			done = False
-			while done == False:
-				i=0
-				while i < len(pop)-1:
-					swapped = False
-					j = i+1
-					if pop[i] > pop[j]:
-						#swap the elements
-						tmp = pop[i]
-						pop[i] = pop[j]
-						pop[j] = tmp
-						swapped = True
-					i += 1
-				if swapped == False:
-					done = True
-	
-
-	#Cocktail sort is a bi-directional bubble sorting algorithm
-	def cocktail_sort(self,pop,direction = 'ASC'):
-		if direction == 'DESC':
-			#Descending Order 
-			done = False
-			while done == False:
-				i=0
-				while i < len(pop)-1:
-					swapped = False
-					j = i+1
-					if pop[i] < pop[j]:
-						#swap the elements
-						tmp = pop[i]
-						pop[i] = pop[j]
-						pop[j] = tmp
-						swapped = True
-					i += 1
-				if swapped == False:
-					done = True
-				
-				#Now go from the back to the front
-				while i > 0:
-					swapped = False
-					j = i-1
-					if pop[i] < pop[j]:
-						#swap the elements
-						tmp = pop[i]
-						pop[i] = pop[j]
-						pop[j] = tmp
-						swapped = True
-					i -= 1
-				if swapped == False:
-					done = True
-		
-		else:
-			#Ascending Order
 			done = False
 			while done == False:
 				i=0
@@ -127,19 +79,81 @@ class MultiSorter():
 					i += 1
 				if swapped == False:
 					done = True
-				
-				#Now go from the back to the front
-				while i > 0:
-					swapped = False #Going the other direction we assume the order may be complete again
-					j = i-1
+	
+
+	#Cocktail sort is a bi-directional bubble sorting algorithm
+	def cocktail_sort(self,pop,direction = 'ASC'):
+		#Ascending Order
+		if direction == 'DESC':
+			done = False
+			while done == False:
+				i=0
+				swapped = False
+				while i < len(pop)-1:
+					j = i+1
 					if pop[i] > pop[j]:
 						#swap the elements
 						tmp = pop[i]
 						pop[i] = pop[j]
 						pop[j] = tmp
 						swapped = True
-					i -= 1
+						
+					i += 1
 				if swapped == False:
 					done = True
+
+				
+				#Now go from the back to the front
+				if done == False:
+					swapped = False
+					k = i
+					while k > 0:
+						l = k-1
+						if pop[k] < pop[l]:
+							#swap the elements
+							tmp = pop[k]
+							pop[k] = pop[l]
+							pop[l] = tmp
+							swapped = True
+						k -= 1
+					if swapped == False:
+						done = True
+		
+		else:
+			#Ascending Order
+			done = False
+			while done == False:
+				i=0
+				swapped = False
+				while i < len(pop)-1:
+					j = i+1
+					if pop[i] > pop[j]:
+						#swap the elements
+						tmp = pop[i]
+						pop[i] = pop[j]
+						pop[j] = tmp
+						swapped = True
+						
+					i += 1
+				if swapped == False:
+					done = True
+		
+				
+				#Now go from the back to the front
+				if done == False:
+					swapped = False
+					k = i
+					while k > 0:
+						l = k-1
+						if pop[k] < pop[l]:
+							#swap the elements
+							tmp = pop[k]
+							pop[k] = pop[l]
+							pop[l] = tmp
+							swapped = True
+						k -= 1
+					if swapped == False:
+						done = True
+				
 		return pop
 		
